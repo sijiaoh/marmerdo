@@ -9,8 +9,10 @@ RSpec.describe Marmerdo::MarkdownParser do
     let(:name) { :Author }
     let(:front_matter) do
       {
-        namespace: :Blog,
-        inheritance: :User
+        marmerdo: {
+          namespace: :Blog,
+          inheritance: :User
+        }
       }
     end
     let(:markdown_content) { combine_into_markdown(front_matter: front_matter) }
@@ -20,19 +22,17 @@ RSpec.describe Marmerdo::MarkdownParser do
 
       expect(node).to be_a(Marmerdo::Node)
       expect(node.name).to eq(name)
-      expect(node.namespace).to eq(front_matter[:namespace])
+      expect(node.namespace).to eq(front_matter[:marmerdo][:namespace])
 
       relationships = node.relationships
       expect(relationships.size).to eq(1)
       expect(relationships.first).to be_a(Marmerdo::Relationship)
       expect(relationships.first.type).to eq(:inheritance)
-      expect(relationships.first.to).to eq(front_matter[:inheritance])
+      expect(relationships.first.to).to eq(front_matter[:marmerdo][:inheritance])
     end
 
     context "when front matter has name" do
-      let(:front_matter) do
-        super().merge(name: :Viewer)
-      end
+      let(:front_matter) { { marmerdo: { name: :Viewer } } }
 
       it "node name is overwritten by front matter" do
         node = parse

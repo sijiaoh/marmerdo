@@ -8,8 +8,8 @@ RSpec.describe Marmerdo::DomainDiagramGenerator do
 
     let(:front_matters) do
       [
-        { name: :User },
-        { name: :Author, inheritance: :User }
+        { marmerdo: { name: :User } },
+        { marmerdo: { name: :Author, inheritance: :User } }
       ]
     end
     let(:markdown_contents) do

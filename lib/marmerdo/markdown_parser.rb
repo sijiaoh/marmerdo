@@ -21,7 +21,7 @@ module Marmerdo
     private
 
     def front_matter
-      @front_matter ||= FrontMatterParser::Parser.new(:md).call(@content).front_matter
+      @front_matter ||= FrontMatterParser::Parser.new(:md).call(@content).front_matter["marmerdo"]
     end
 
     def relationships
