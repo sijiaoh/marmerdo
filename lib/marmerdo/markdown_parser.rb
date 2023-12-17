@@ -9,7 +9,7 @@ module Marmerdo
     def parse(name, content)
       front_matter = FrontMatterParser::Parser.new(:md).call(content).front_matter
 
-      node = Node.new(name: name, namespace: front_matter["namespace"])
+      node = Node.new(name: front_matter["name"] || name, namespace: front_matter["namespace"])
       node.relationships = generate_relationships(front_matter)
 
       node
