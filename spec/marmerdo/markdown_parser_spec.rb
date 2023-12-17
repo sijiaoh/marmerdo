@@ -35,10 +35,20 @@ RSpec.describe Marmerdo::MarkdownParser do
       let(:front_matter) { { marmerdo: { name: :Viewer } } }
 
       it "node name is overwritten by front matter" do
-        node = parse
-
-        expect(node.name).to eq(:Viewer)
+        expect(parse.name).to eq(:Viewer)
       end
+    end
+
+    context "when markdown has no front matter" do
+      let(:markdown_content) { "" }
+
+      it("returns nil") { expect(parse).to be_nil }
+    end
+
+    context "when markdown has no marmerdo front matter" do
+      let(:front_matter) { {} }
+
+      it("returns nil") { expect(parse).to be_nil }
     end
   end
 end
