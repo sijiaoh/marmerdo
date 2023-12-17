@@ -18,7 +18,7 @@ RSpec.describe Marmerdo::DomainDiagramGenerator do
       end
     end
 
-    let(:nodes) { markdown_contents.map { |content| Marmerdo::MarkdownParser.new.parse("", content) } }
+    let(:nodes) { markdown_contents.map { |content| Marmerdo::MarkdownParser.new("", content).parse } }
 
     it "returns a domain diagram with relationships" do
       domain_diagram = generate

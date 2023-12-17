@@ -4,7 +4,7 @@ require "marmerdo/markdown_parser"
 
 RSpec.describe Marmerdo::MarkdownParser do
   describe "#parse" do
-    subject(:parse) { Marmerdo::MarkdownParser.new.parse(name, markdown_content) }
+    subject(:parse) { Marmerdo::MarkdownParser.new(name, markdown_content).parse }
 
     let(:name) { :Author }
     let(:front_matter) do

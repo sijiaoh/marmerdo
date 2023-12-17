@@ -4,14 +4,15 @@ require_relative "relationship"
 
 module Marmerdo
   class MarkdownParser
-    # @param [String] content
-    # @return [Node]
-    def parse(name, content)
-      front_matter = FrontMatterParser::Parser.new(:md).call(content).front_matter
+    def initialize(name, content)
+      @name = name
+      @content = content
+    end
 
-      relationships = generate_relationships(front_matter)
+    # @return [Node]
+    def parse
       Node.new(
-        name: front_matter["name"] || name,
+        name: front_matter["name"] || @name,
         namespace: front_matter["namespace"],
         relationships: relationships
       )
@@ -19,8 +20,12 @@ module Marmerdo
 
     private
 
-    def generate_relationships(front_matter)
-      front_matter.filter { |k, _| Relationship::TYPES.include?(k.to_sym) }.map do |type, to|
+    def front_matter
+      @front_matter ||= FrontMatterParser::Parser.new(:md).call(@content).front_matter
+    end
+
+    def relationships
+      @relationships ||= front_matter.filter { |k, _| Relationship::TYPES.include?(k.to_sym) }.map do |type, to|
         Relationship.new(type: type, to: to)
       end
     end
