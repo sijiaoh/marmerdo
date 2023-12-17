@@ -4,7 +4,7 @@ require "marmerdo/markdown_parser"
 
 RSpec.describe Marmerdo::MarkdownParser do
   describe "#parse" do
-    subject(:parse) { described_class.new.parse(name, markdown_content) }
+    subject(:parse) { Marmerdo::MarkdownParser.new.parse(name, markdown_content) }
 
     let(:name) { :Author }
     let(:front_matter) do
@@ -13,14 +13,7 @@ RSpec.describe Marmerdo::MarkdownParser do
         inheritance: :User
       }
     end
-    let(:markdown_content) do
-      [
-        "---",
-        front_matter.to_json,
-        "---",
-        ""
-      ].flatten.join("\n")
-    end
+    let(:markdown_content) { combine_into_markdown(front_matter: front_matter) }
 
     it "returns a node with relationships" do
       node = parse

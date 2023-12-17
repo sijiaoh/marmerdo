@@ -1,5 +1,7 @@
 module Marmerdo
   class Relationship
+    class UnknownRelationshipType < Error; end
+
     TYPES = %i[
       inheritance
       composition
@@ -12,16 +14,6 @@ module Marmerdo
     ].freeze
 
     # https://mermaid.js.org/syntax/classDiagram.html#defining-relationship
-    # | Type    | Description   |
-    # | ------- | ------------- |
-    # | `<\|--` | Inheritance   |
-    # | `*--`   | Composition   |
-    # | `o--`   | Aggregation   |
-    # | `-->`   | Association   |
-    # | `--`    | Link (Solid)  |
-    # | `..>`   | Dependency    |
-    # | `..\|>` | Realization   |
-    # | `..`    | Link (Dashed) |
     # @return [Symbol]
     attr_reader :type
 
@@ -35,6 +27,29 @@ module Marmerdo
     def initialize(type:, to:)
       @type = type.to_sym
       @to = to.to_sym
+    end
+
+    def to_mermaid_line(from)
+      case type
+      when :inheritance
+        "#{to} <|-- #{from}"
+      when :composition
+        "#{to} *-- #{from}"
+      when :aggregation
+        "#{to} o-- #{from}"
+      when :association
+        "#{from} --> #{to}"
+      when :link_solid
+        "#{from} -- #{to}"
+      when :dependency
+        "#{from} ..> #{to}"
+      when :realization
+        "#{from} ..|> #{to}"
+      when :link_dashed
+        "#{from} .. #{to}"
+      else
+        raise UnknownRelationshipType
+      end
     end
   end
 end

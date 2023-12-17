@@ -12,4 +12,7 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  require_relative "support/markdown_support"
+  config.include MarkdownSupport
 end
