@@ -11,12 +11,16 @@ RSpec.describe Marmerdo::Cli do
       generate
 
       expect(File).to exist("tmp/diagram.mmd")
-      expect(File.read("tmp/diagram.mmd")).to eq(<<~MERMAID.chomp)
-        classDiagram
-        class Author
-        class user
-        user <|-- Author
-      MERMAID
+      expect(File.read("tmp/diagram.mmd")).to eq(
+        [
+          "%% #{Marmerdo::OutputGenerator::WARNING_COMMENT}",
+          "",
+          "classDiagram",
+          "class Author",
+          "class user",
+          "user <|-- Author"
+        ].join("\n")
+      )
     end
   end
 end
