@@ -1,3 +1,5 @@
+require_relative "error"
+
 module Marmerdo
   class Relationship
     class UnknownRelationshipType < Error; end

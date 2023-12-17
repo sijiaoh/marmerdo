@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "marmerdo"
+require "fileutils"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -15,4 +16,6 @@ RSpec.configure do |config|
 
   require_relative "support/markdown_support"
   config.include MarkdownSupport
+
+  FileUtils.mkdir_p("tmp")
 end

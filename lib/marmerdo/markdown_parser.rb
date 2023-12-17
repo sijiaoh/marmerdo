@@ -9,23 +9,33 @@ module Marmerdo
       @content = content
     end
 
-    # @return [Node]
+    # @return [Node, nil] the parsed node or nil if the file has no marmerdo front matter.
     def parse
+      return nil unless marmerdo_file?
+
       Node.new(
-        name: front_matter["name"] || @name,
-        namespace: front_matter["namespace"],
+        name: marmerdo_matter["name"] || @name,
+        namespace: marmerdo_matter["namespace"],
         relationships: relationships
       )
     end
 
     private
 
+    def marmerdo_file?
+      front_matter.key?("marmerdo")
+    end
+
     def front_matter
-      @front_matter ||= FrontMatterParser::Parser.new(:md).call(@content).front_matter["marmerdo"]
+      @front_matter ||= FrontMatterParser::Parser.new(:md).call(@content).front_matter || {}
+    end
+
+    def marmerdo_matter
+      @marmerdo_matter ||= front_matter["marmerdo"] || {}
     end
 
     def relationships
-      @relationships ||= front_matter.filter { |k, _| Relationship::TYPES.include?(k.to_sym) }.map do |type, to|
+      @relationships ||= marmerdo_matter.filter { |k| Relationship::TYPES.include?(k.to_sym) }.map do |type, to|
         Relationship.new(type: type, to: to)
       end
     end
