@@ -11,5 +11,9 @@ module Marmerdo
       @namespace = namespace&.to_sym
       @relationships = relationships
     end
+
+    def to_mermaid_line
+      "class #{name}"
+    end
   end
 end

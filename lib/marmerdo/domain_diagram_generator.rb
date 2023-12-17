@@ -6,9 +6,7 @@ module Marmerdo
 
     # @return [String] mermaid class diagram
     def generate
-      classes = nodes_by_name.keys.map do |name|
-        "class #{name}"
-      end
+      classes = @nodes.map(&:to_mermaid_line)
 
       relationships = @nodes.flat_map do |node|
         node.relationships.map do |relationship|
