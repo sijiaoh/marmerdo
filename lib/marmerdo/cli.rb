@@ -23,7 +23,7 @@ module Marmerdo
 
       puts "Writing domain diagram to #{output_path}."
 
-      domain_diagram = Marmerdo::DomainDiagramGenerator.new(nodes).generate
+      domain_diagram = Marmerdo::DomainDiagramGenerator.new(output_path: output_path, nodes: nodes).generate
       output_content = OutputGenerator.new(output_path, domain_diagram).generate
       File.write(output_path, output_content)
 

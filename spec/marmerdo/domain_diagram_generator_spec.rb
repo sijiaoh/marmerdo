@@ -4,29 +4,32 @@ require "marmerdo/domain_diagram_generator"
 
 RSpec.describe Marmerdo::DomainDiagramGenerator do
   describe "#generate" do
-    subject(:generate) { Marmerdo::DomainDiagramGenerator.new(nodes).generate }
+    subject(:generate) { Marmerdo::DomainDiagramGenerator.new(output_path: "tmp/diagram.md", nodes: nodes).generate }
 
-    let(:front_matters) do
+    let(:nodes) do
       [
-        { marmerdo: { name: :User } },
-        { marmerdo: { name: :Author, inheritance: :User } }
+        Marmerdo::Node.new(
+          path: "spec/fixtures/user.md",
+          name: "User",
+          relationships: []
+        ),
+        Marmerdo::Node.new(
+          path: "spec/fixtures/author.md",
+          name: "Author",
+          relationships: [Marmerdo::Relationship.new(type: :inheritance, to: "User")]
+        )
       ]
     end
-    let(:markdown_contents) do
-      front_matters.map do |front_matter|
-        combine_into_markdown(front_matter: front_matter)
-      end
-    end
 
-    let(:nodes) { markdown_contents.map { |content| Marmerdo::MarkdownParser.new("", content).parse } }
-
-    it "returns a domain diagram with relationships" do
+    it "returns a domain diagram" do
       domain_diagram = generate
 
       expect(domain_diagram).to eq(<<~DIAGRAM.chomp)
         classDiagram
         class User
         class Author
+        link User "../spec/fixtures/user.md"
+        link Author "../spec/fixtures/author.md"
         User <|-- Author
       DIAGRAM
     end
