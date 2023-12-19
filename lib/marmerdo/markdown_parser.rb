@@ -4,8 +4,8 @@ require_relative "relationship"
 
 module Marmerdo
   class MarkdownParser
-    def initialize(name, content)
-      @name = name
+    def initialize(path, content)
+      @path = path
       @content = content
     end
 
@@ -14,8 +14,8 @@ module Marmerdo
       return nil unless marmerdo_file?
 
       Node.new(
-        name: marmerdo_matter["name"] || @name,
-        namespace: marmerdo_matter["namespace"],
+        path: @path,
+        name: marmerdo_matter["name"] || File.basename(@path, ".*"),
         relationships: relationships
       )
     end

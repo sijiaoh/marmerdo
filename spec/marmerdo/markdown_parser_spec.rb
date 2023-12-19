@@ -4,13 +4,13 @@ require "marmerdo/markdown_parser"
 
 RSpec.describe Marmerdo::MarkdownParser do
   describe "#parse" do
-    subject(:parse) { Marmerdo::MarkdownParser.new(name, markdown_content).parse }
+    subject(:parse) { Marmerdo::MarkdownParser.new(path, markdown_content).parse }
 
-    let(:name) { :Author }
+    let(:path) { "spec/fixtures/author.md" }
     let(:front_matter) do
       {
         marmerdo: {
-          namespace: :Blog,
+          name: :Author,
           inheritance: :User
         }
       }
@@ -21,8 +21,8 @@ RSpec.describe Marmerdo::MarkdownParser do
       node = parse
 
       expect(node).to be_a(Marmerdo::Node)
-      expect(node.name).to eq(name)
-      expect(node.namespace).to eq(front_matter[:marmerdo][:namespace])
+      expect(node.path).to eq(path)
+      expect(node.name).to eq(front_matter[:marmerdo][:name])
 
       relationships = node.relationships
       expect(relationships.size).to eq(1)

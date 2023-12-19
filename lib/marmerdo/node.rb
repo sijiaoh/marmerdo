@@ -1,14 +1,14 @@
 module Marmerdo
   class Node
-    # @return [Symbol, nil]
+    # @return [Symbol]
+    attr_reader :path
+    # @return [Symbol]
     attr_reader :name
-    # @return [Symbol, nil]
-    attr_reader :namespace
     attr_accessor :relationships
 
-    def initialize(name:, namespace:, relationships:)
-      @name = name&.to_sym
-      @namespace = namespace&.to_sym
+    def initialize(path:, name:, relationships:)
+      @path = path
+      @name = name.to_sym
       @relationships = relationships
     end
 

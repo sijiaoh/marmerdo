@@ -13,9 +13,8 @@ module Marmerdo
       raise ArgumentError, "You must provide a source glob and an output file" if source_glob.nil? || output_path.nil?
 
       nodes = Dir[source_glob].map do |source_path|
-        name = File.basename(source_path, ".*")
         content = File.read(source_path)
-        node = Marmerdo::MarkdownParser.new(name, content).parse
+        node = Marmerdo::MarkdownParser.new(source_path, content).parse
 
         puts "Loaded #{node.name}." if node
 
