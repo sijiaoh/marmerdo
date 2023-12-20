@@ -12,7 +12,7 @@ module Marmerdo
 
       relationships = @nodes.flat_map do |node|
         node.relationships.map do |relationship|
-          relationship.to_mermaid_line(node.name)
+          relationship.to_mermaid_str(node.name)
         end
       end
 

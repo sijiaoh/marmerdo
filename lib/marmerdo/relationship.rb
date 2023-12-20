@@ -19,7 +19,7 @@ module Marmerdo
     # @return [Symbol]
     attr_reader :type
 
-    # @return [Symbol]
+    # @return [Array<Symbol>]
     attr_reader :to
 
     def self.valid_type?(type)
@@ -28,30 +28,36 @@ module Marmerdo
 
     def initialize(type:, to:)
       @type = type.to_sym
-      @to = to.to_sym
+      @to = if to.is_a?(Array)
+              to.map(&:to_sym)
+            else
+              [to.to_sym]
+            end
     end
 
-    def to_mermaid_line(from)
-      case type
-      when :inheritance
-        "#{to} <|-- #{from}"
-      when :composition
-        "#{to} *-- #{from}"
-      when :aggregation
-        "#{to} o-- #{from}"
-      when :association
-        "#{from} --> #{to}"
-      when :link_solid
-        "#{from} -- #{to}"
-      when :dependency
-        "#{from} ..> #{to}"
-      when :realization
-        "#{from} ..|> #{to}"
-      when :link_dashed
-        "#{from} .. #{to}"
-      else
-        raise UnknownRelationshipType
-      end
+    def to_mermaid_str(from)
+      to.map do |t|
+        case type
+        when :inheritance
+          "#{t} <|-- #{from}"
+        when :composition
+          "#{t} *-- #{from}"
+        when :aggregation
+          "#{t} o-- #{from}"
+        when :association
+          "#{from} --> #{t}"
+        when :link_solid
+          "#{from} -- #{t}"
+        when :dependency
+          "#{from} ..> #{t}"
+        when :realization
+          "#{from} ..|> #{t}"
+        when :link_dashed
+          "#{from} .. #{t}"
+        else
+          raise UnknownRelationshipType
+        end
+      end.join("\n")
     end
   end
 end

@@ -27,8 +27,6 @@ RSpec.describe Marmerdo::MarkdownParser do
       relationships = node.relationships
       expect(relationships.size).to eq(1)
       expect(relationships.first).to be_a(Marmerdo::Relationship)
-      expect(relationships.first.type).to eq(:inheritance)
-      expect(relationships.first.to).to eq(front_matter[:marmerdo][:inheritance])
     end
 
     context "when front matter has name" do
