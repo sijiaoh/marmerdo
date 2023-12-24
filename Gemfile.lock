@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    marmerdo (0.2.2)
+    marmerdo (0.2.3)
       front_matter_parser
       thor
 
