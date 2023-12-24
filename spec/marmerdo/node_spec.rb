@@ -9,9 +9,12 @@ RSpec.describe Marmerdo::Node do
   let(:relationships) { [] }
 
   describe "#generate_mermaid_link" do
-    subject(:generate_mermaid_link) { node.generate_mermaid_link(output_path) }
+    subject(:generate_mermaid_link) do
+      node.generate_mermaid_link(output_path, enable_link_extension: enable_link_extension)
+    end
 
     let(:output_path) { "output.md" }
+    let(:enable_link_extension) { true }
 
     it "returns a mermaid link" do
       expect(generate_mermaid_link).to eq('link User "./spec/fixtures/user.md"')
@@ -22,6 +25,14 @@ RSpec.describe Marmerdo::Node do
 
       it "returns a mermaid link" do
         expect(generate_mermaid_link).to eq('link User "../spec/fixtures/user.md"')
+      end
+    end
+
+    context "when enable_link_extension is false" do
+      let(:enable_link_extension) { false }
+
+      it "returns a mermaid link" do
+        expect(generate_mermaid_link).to eq('link User "./spec/fixtures/user"')
       end
     end
   end

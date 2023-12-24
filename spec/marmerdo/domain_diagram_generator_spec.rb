@@ -4,7 +4,13 @@ require "marmerdo/domain_diagram_generator"
 
 RSpec.describe Marmerdo::DomainDiagramGenerator do
   describe "#generate" do
-    subject(:generate) { Marmerdo::DomainDiagramGenerator.new(output_path: "tmp/diagram.md", nodes: nodes).generate }
+    subject(:generate) do
+      Marmerdo::DomainDiagramGenerator.new(
+        output_path: "tmp/diagram.md",
+        nodes: nodes,
+        enable_link_extension: enable_link_extension
+      ).generate
+    end
 
     let(:nodes) do
       [
@@ -20,6 +26,7 @@ RSpec.describe Marmerdo::DomainDiagramGenerator do
         )
       ]
     end
+    let(:enable_link_extension) { true }
 
     it "returns a domain diagram" do
       domain_diagram = generate

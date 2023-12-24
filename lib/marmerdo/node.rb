@@ -18,7 +18,9 @@ module Marmerdo
       "class #{name}"
     end
 
-    def generate_mermaid_link(output_path)
+    def generate_mermaid_link(output_path, enable_link_extension:)
+      path = enable_link_extension ? @path : Pathname.new(@path).sub_ext("").to_s
+
       output_dir = Pathname.new(output_path).dirname
       relative_path = Pathname.new(path).relative_path_from(output_dir).to_s
       relative_path = "./#{relative_path}" unless relative_path.start_with?("../")
