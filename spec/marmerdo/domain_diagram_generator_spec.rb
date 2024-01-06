@@ -17,11 +17,13 @@ RSpec.describe Marmerdo::DomainDiagramGenerator do
         Marmerdo::Node.new(
           path: "spec/fixtures/user.md",
           name: "User",
+          namespace: nil,
           relationships: []
         ),
         Marmerdo::Node.new(
           path: "spec/fixtures/author.md",
           name: "Author",
+          namespace: nil,
           relationships: [Marmerdo::Relationship.new(type: :inheritance, to: "User")]
         )
       ]

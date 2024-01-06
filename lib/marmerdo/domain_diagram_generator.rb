@@ -8,7 +8,7 @@ module Marmerdo
 
     # @return [String] mermaid class diagram
     def generate
-      classes = @nodes.map(&:to_mermaid_line)
+      classes = @nodes.map(&:to_mermaid_str)
       links = @nodes.map do |node|
         node.generate_mermaid_link(@output_path, enable_link_extension: @enable_link_extension)
       end

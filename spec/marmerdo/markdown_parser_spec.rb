@@ -23,6 +23,7 @@ RSpec.describe Marmerdo::MarkdownParser do
       expect(node).to be_a(Marmerdo::Node)
       expect(node.path).to eq(path)
       expect(node.name).to eq(front_matter[:marmerdo][:name])
+      expect(node.namespace).to eq(nil)
 
       relationships = node.relationships
       expect(relationships.size).to eq(1)
@@ -34,6 +35,14 @@ RSpec.describe Marmerdo::MarkdownParser do
 
       it "node name is overwritten by front matter" do
         expect(parse.name).to eq(:Viewer)
+      end
+    end
+
+    context "when front matter has namespace" do
+      let(:front_matter) { { marmerdo: { namespace: :blog } } }
+
+      it "node namespace is overwritten by front matter" do
+        expect(parse.namespace).to eq(:blog)
       end
     end
 

@@ -16,6 +16,7 @@ module Marmerdo
       Node.new(
         path: @path,
         name: marmerdo_matter["name"] || File.basename(@path, ".*"),
+        namespace: marmerdo_matter["namespace"],
         relationships: relationships
       )
     end

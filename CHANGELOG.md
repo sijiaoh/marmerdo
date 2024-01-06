@@ -1,6 +1,10 @@
+## [0.2.4]
+
+- Add namespace support.
+
 ## [0.2.3] - 2023-12-25
 
-Add link_extension option.
+- Add link_extension option.
 
 ## [0.2.2] - 2023-12-20
 

@@ -6,16 +6,27 @@ module Marmerdo
     attr_reader :path
     # @return [Symbol]
     attr_reader :name
+    # @return [Symbol, nil]
+    attr_reader :namespace
     attr_accessor :relationships
 
-    def initialize(path:, name:, relationships:)
+    def initialize(path:, name:, namespace:, relationships:)
       @path = path
       @name = name.to_sym
+      @namespace = namespace&.to_sym
       @relationships = relationships
     end
 
-    def to_mermaid_line
-      "class #{name}"
+    def to_mermaid_str
+      str = "class #{name}"
+
+      return str if namespace.nil?
+
+      [
+        "namespace #{namespace} {",
+        str,
+        "}"
+      ].join("\n")
     end
 
     def generate_mermaid_link(output_path, enable_link_extension:)
