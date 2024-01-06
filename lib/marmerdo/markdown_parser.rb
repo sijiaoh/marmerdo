@@ -36,9 +36,9 @@ module Marmerdo
     end
 
     def relationships
-      @relationships ||= marmerdo_matter.filter { |k| Relationship::TYPES.include?(k.to_sym) }.map do |type, to|
-        Relationship.new(type: type, to: to)
-      end
+      @relationships ||= marmerdo_matter["relationships"]&.map do |relationship|
+        Relationship.new(relationship)
+      end || []
     end
   end
 end

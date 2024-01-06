@@ -1,6 +1,7 @@
-## [0.2.4]
+## [0.3.0] - 2024-01-07
 
 - Add namespace support.
+- inheritanceなどのキーワードのかわりに、直接Mermaid記法でRelationを記載するよう変更。
 
 ## [0.2.3] - 2023-12-25
 

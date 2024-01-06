@@ -21,7 +21,7 @@ RSpec.describe Marmerdo::Cli do
           "class user",
           'link Author "../spec/fixtures/author.md"',
           'link user "../spec/fixtures/user.md"',
-          "user <|-- Author"
+          "Author --|> user"
         ].join("\n")
       )
     end

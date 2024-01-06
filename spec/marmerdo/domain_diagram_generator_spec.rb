@@ -24,7 +24,7 @@ RSpec.describe Marmerdo::DomainDiagramGenerator do
           path: "spec/fixtures/author.md",
           name: "Author",
           namespace: nil,
-          relationships: [Marmerdo::Relationship.new(type: :inheritance, to: "User")]
+          relationships: [Marmerdo::Relationship.new("--|> User")]
         )
       ]
     end
@@ -39,7 +39,7 @@ RSpec.describe Marmerdo::DomainDiagramGenerator do
         class Author
         link User "../spec/fixtures/user.md"
         link Author "../spec/fixtures/author.md"
-        User <|-- Author
+        Author --|> User
       DIAGRAM
     end
   end

@@ -1,5 +1,6 @@
 ---
 marmerdo:
   name: Author
-  inheritance: user
+  relationships:
+    - "--|> user"
 ---

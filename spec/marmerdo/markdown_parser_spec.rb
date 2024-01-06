@@ -11,7 +11,7 @@ RSpec.describe Marmerdo::MarkdownParser do
       {
         marmerdo: {
           name: :Author,
-          inheritance: :User
+          relationships: ["--|> User"]
         }
       }
     end
